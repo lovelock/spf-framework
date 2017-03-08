@@ -11,6 +11,19 @@ namespace Spf\Framework\Wrapper;
 
 use Interop\Container\ContainerInterface;
 
+/**
+ * Class Logger
+ * @package Spf\Framework\Wrapper
+ *
+ * @method emergency($message, array $context = [])
+ * @method alert($message, array $context = [])
+ * @method critical($message, array $context = [])
+ * @method error($message, array $context = [])
+ * @method warning($message, array $context = [])
+ * @method notice($message, array $context = [])
+ * @method info($message, array $context = [])
+ * @method debug($message, array $context = [])
+ */
 class Logger
 {
     private $ci;
