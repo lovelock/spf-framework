@@ -11,7 +11,7 @@ namespace Spf\Framework\Config;
 
 abstract class BasicAuthConfigAbstract implements BasicAuthConfigInterface
 {
-    private $config;
+    protected $config;
 
     abstract public function __construct();
 
