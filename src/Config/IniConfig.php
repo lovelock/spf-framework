@@ -14,10 +14,14 @@ class IniConfig extends AbstractConfig
     protected $nestSeparator = '.';
     protected $sectionSeparator = ':';
 
-
     public function __construct($filename)
     {
         $this->filename = $filename;
+    }
+
+    public function toArray($section = null)
+    {
+        return $this->loadIniFile($section);
     }
 
     private function parseIniFile()
@@ -33,7 +37,12 @@ class IniConfig extends AbstractConfig
         return $iniArray;
     }
 
-    private function loadIniFile()
+    /**
+     * @param $section
+     * @return array
+     * @throws Exception
+     */
+    private function loadIniFile($section)
     {
         $loaded = $this->parseIniFile();
         $iniArray = [];
@@ -45,15 +54,20 @@ class IniConfig extends AbstractConfig
                 case 1:
                     $iniArray[$currentSection] = $data;
                     break;
+
                 case 2:
                     $extendedSection = $pieces[1];
-                    $iniArray[$currentSection] = array_merge();
+                    $iniArray[$currentSection] = array_merge($iniArray[$extendedSection], $data);
                     break;
+
                 default:
                     throw new Exception('Section ' . $currentSection . ' may not exists');
             }
         }
 
+        if ($section !== null) {
+            return $iniArray[$section];
+        }
         return $iniArray;
     }
 }
