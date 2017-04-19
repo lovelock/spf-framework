@@ -11,15 +11,13 @@ namespace Spf\Framework\Middleware;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class TrailingSlash
+class TrailingSlash extends Base
 {
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next)
     {
         $uri = $request->getUri();
         $path = $uri->getPath();
         if ($path !== '/' && substr($path, -1) === '/') {
-            // permanently redirect paths with a trailing slash
-            // to their non-trailing counterpart
             $uri = $uri->withPath(substr($path, 0, -1));
 
             if ($request->getMethod() === 'GET') {
